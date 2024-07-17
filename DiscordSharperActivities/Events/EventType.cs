@@ -1,13 +1,15 @@
 namespace DiscordSharperActivities.Events;
 internal enum EventType
 {
-    READY,
-    VOICE_STATE_UPDATE,
-    SPEAKING_START,
-    ORIENTATION_UPDATE,
-    ENTITLEMENT_CREATE,
-    THERMAL_STATE_UPDATE,
-    ACTIVITY_INSTANCE_PARTICIPANTS_UPDATE
+    Ready,
+    VoiceStateUpdate,
+    SpeakingStart,
+    SpeakingStop,
+    OrientationUpdate,
+    EntitlementCreate,
+    CurrentUserUpdate,
+    ThermalStateUpdate,
+    ActivityInstanceParticipantsUpdate
 }
 
 internal static class EventTypeExt
@@ -16,13 +18,14 @@ internal static class EventTypeExt
     {
         return @event switch
         {
-            EventType.READY => "READY",
-            EventType.VOICE_STATE_UPDATE => "VOICE_STATE_UPDATE",
-            EventType.SPEAKING_START => "SPEAKING_START",
-            EventType.ORIENTATION_UPDATE => "ORIENTATION_UPDATE",
-            EventType.ENTITLEMENT_CREATE => "ENTITLEMENT_CREATE",
-            EventType.THERMAL_STATE_UPDATE => "THERMAL_STATE_UPDATE",
-            EventType.ACTIVITY_INSTANCE_PARTICIPANTS_UPDATE => "ACTIVITY_INSTANCE_PARTICIPANTS_UPDATE",
+            EventType.Ready => "READY",
+            EventType.VoiceStateUpdate => "VOICE_STATE_UPDATE",
+            EventType.SpeakingStart => "SPEAKING_START",
+            EventType.SpeakingStop => "SPEAKING_STOP",
+            EventType.OrientationUpdate => "ORIENTATION_UPDATE",
+            EventType.EntitlementCreate => "ENTITLEMENT_CREATE",
+            EventType.ThermalStateUpdate => "THERMAL_STATE_UPDATE",
+            EventType.ActivityInstanceParticipantsUpdate => "ACTIVITY_INSTANCE_PARTICIPANTS_UPDATE",
             _ => throw new ArgumentOutOfRangeException(nameof(@event), @event, null),
         };
     }
