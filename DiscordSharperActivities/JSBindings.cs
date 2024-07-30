@@ -7,9 +7,9 @@ namespace DiscordSharperActivities;
 [SupportedOSPlatform("browser")]
 internal static partial class JSBindings
 {
-    internal static void Import(string urlBase)
+    internal async static Task ImportAsync(string urlBase)
     {
-        JSHost.ImportAsync("discordWrapper",$"{urlBase}/wrapper.js").Wait();
+        await JSHost.ImportAsync("discordWrapper",$"{urlBase}/_content/DiscordSharperActivities/wrapper.js");
     }
 
     [JSImport("createSDKConfig", "discordWrapper")]

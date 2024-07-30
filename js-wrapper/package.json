@@ -1,0 +1,29 @@
+{
+  "name": "js-wrapper",
+  "version": "1.0.0",
+  "description": "A Discord embedded app sdk wrapper",
+  "main": "wrapper.js",
+  "scripts": {
+    "build": "tsc ; ./esbuild.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrloic23/DiscordSharperActivities.git"
+  },
+  "keywords": [
+    "discord",
+    "embedded-app-sdk"
+  ],
+  "author": "Mrloic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrloic23/DiscordSharperActivities/issues"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@discord/embedded-app-sdk": "^1.4.0"
+  }
+}

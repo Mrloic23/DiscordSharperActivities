@@ -1,4 +1,9 @@
+
+global using global::System;
+global using global::System.Threading.Tasks;
+
 using System.Collections;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
@@ -6,7 +11,7 @@ using System.Text.Json;
 using DiscordSharperActivities.Events;
 using DiscordSharperActivities.Events.Args;
 using DiscordSharperActivities.Models;
-
+[assembly: Debuggable(DebuggableAttribute.DebuggingModes.EnableEditAndContinue)]
 namespace DiscordSharperActivities;
 
 [SupportedOSPlatform("Browser")]
@@ -27,7 +32,6 @@ public class DiscordSDK
 
     private DiscordSDK(string urlBase, string clientID, SDKConfig? config = null)
     {
-        JSBindings.Import(urlBase);
         _sdk = JSBindings.InstantiateSDK(clientID, config?._ref);
     }
 
@@ -35,9 +39,11 @@ public class DiscordSDK
     /// Get the instance of the Discord SDK, clientID can be null if there is already an instance
     /// </summary>
     /// <param name="clientID">The client ID of the Discord application</param>
+    /// <param name="urlBase">The base URL of the server where these files are served from (null if your frontend is served on "/")</param>
     /// <returns>The instance of the Discord SDK</returns>
 
-    public static DiscordSDK GetInstance(string? clientID = null, string? urlBase = null, SDKConfig? config = null)
+
+    public async static Task<DiscordSDK> GetInstanceAsync(string? clientID = null, string? urlBase = "", SDKConfig? config = null)
     {
         if (_instance != null)
             return _instance;
@@ -45,6 +51,7 @@ public class DiscordSDK
             throw new ArgumentNullException(nameof(clientID), "clientID and urlBase cannot be null when instantiating");
         if (urlBase == null)
             throw new ArgumentNullException(nameof(urlBase), "clientID and urlBase cannot be null when instantiating");
+        await JSBindings.ImportAsync(urlBase);
         _instance ??= new DiscordSDK(urlBase!, clientID!, config);
         return _instance;
     }
