@@ -6,8 +6,9 @@ await esbuild.build({
     entryPoints: ["./out/wrapper.js"],
     bundle: true,
     platform: 'browser',
-    outfile: './dist/wrapper.js',
-    format: 'esm',
+    outfile: './dist/wrapper.mjs',
+    format: 'iife',
     target: ['es2020'],
     sourcemap: true,
+    globalName:"wrapper"
 })

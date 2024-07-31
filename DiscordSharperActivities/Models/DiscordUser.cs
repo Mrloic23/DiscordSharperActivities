@@ -14,5 +14,5 @@ public class DiscordUser
     public readonly string discriminator = default!;
 
     [JsonPropertyName("avatar")]
-    public readonly string? avatarID;
+    public readonly string? avatarID;   
 }

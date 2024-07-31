@@ -11,6 +11,7 @@ using System.Text.Json;
 using DiscordSharperActivities.Events;
 using DiscordSharperActivities.Events.Args;
 using DiscordSharperActivities.Models;
+
 [assembly: Debuggable(DebuggableAttribute.DebuggingModes.EnableEditAndContinue)]
 namespace DiscordSharperActivities;
 
@@ -30,29 +31,28 @@ public class DiscordSDK
     public string ClientID { get => _sdk.GetPropertyAsString("clientID")!; }
     public string InstanceID { get => _sdk.GetPropertyAsString("instanceID")!; }
 
-    private DiscordSDK(string urlBase, string clientID, SDKConfig? config = null)
+    private DiscordSDK(SDKConfig config)
     {
-        _sdk = JSBindings.InstantiateSDK(clientID, config?._ref);
+        var conf = config.ToJSObject();
+        _sdk = JSBindings.InstantiateSDK(config.clientID, conf);
     }
 
-    /// <summary>
-    /// Get the instance of the Discord SDK, clientID can be null if there is already an instance
-    /// </summary>
-    /// <param name="clientID">The client ID of the Discord application</param>
-    /// <param name="urlBase">The base URL of the server where these files are served from (null if your frontend is served on "/")</param>
-    /// <returns>The instance of the Discord SDK</returns>
-
-
-    public async static Task<DiscordSDK> GetInstanceAsync(string? clientID = null, string? urlBase = "", SDKConfig? config = null)
+    public async static Task<DiscordSDK> CreateSDKAsync(SDKConfig config)
     {
         if (_instance != null)
-            return _instance;
-        if (clientID == null)
-            throw new ArgumentNullException(nameof(clientID), "clientID and urlBase cannot be null when instantiating");
-        if (urlBase == null)
-            throw new ArgumentNullException(nameof(urlBase), "clientID and urlBase cannot be null when instantiating");
-        await JSBindings.ImportAsync(urlBase);
-        _instance ??= new DiscordSDK(urlBase!, clientID!, config);
+            throw new InvalidOperationException("SDK has already been created");
+
+        if (!JSBindings.IsImported)
+            await JSBindings.ImportAsync(config.urlBase);
+        _instance = new DiscordSDK(config);
+        return _instance;
+    }
+
+    /// <returns>The instance of the Discord SDK</returns>
+    public static DiscordSDK GetInstance()
+    {
+        if (_instance == null)
+            throw new InvalidOperationException("SDK has not been created yet");
         return _instance;
     }
 
