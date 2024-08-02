@@ -5,6 +5,13 @@ namespace DiscordSharperActivities.Models;
 
 public class UserVoiceState
 {
+    internal UserVoiceState(bool mute, string nickname, DiscordUser user, VoiceState voiceState)
+    {
+        this.mute = mute;
+        this.nickname = nickname;
+        this.user = user;
+        this.voiceState = voiceState;
+    }
     [JsonRequired]
     public readonly bool mute;
 
@@ -19,6 +26,15 @@ public class UserVoiceState
 
     public class VoiceState
     {
+
+        internal VoiceState(bool mute, bool deaf, bool selfMute, bool selfDeaf, bool suppress)
+        {
+            this.mute = mute;
+            this.deaf = deaf;
+            this.selfMute = selfMute;
+            this.selfDeaf = selfDeaf;
+            this.suppress = suppress;
+        }
         [JsonRequired]
         public bool mute;
         [JsonRequired]

@@ -6,9 +6,10 @@ using System.Runtime.Versioning;
 
 namespace DiscordSharperActivities;
 [SupportedOSPlatform("browser")]
+
 internal static partial class JSBindings
 {
-    internal static bool IsImported { get; private set; } = false;
+    internal static bool IsImported { get; set; } = false;
     internal async static Task ImportAsync(string urlBase)
     {
         if (IsImported)

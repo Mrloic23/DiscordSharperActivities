@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordSharperActivities", "DiscordSharperActivities\DiscordSharperActivities.csproj", "{40CB6F05-7B11-4C47-9BEE-34C2B33C943E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordSharperActivities.Testing", "DiscordSharperActivities.Testing\DiscordSharperActivities.Testing.csproj", "{8FEA2184-E3B4-4FBC-80F2-053B7F79DEA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{40CB6F05-7B11-4C47-9BEE-34C2B33C943E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40CB6F05-7B11-4C47-9BEE-34C2B33C943E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40CB6F05-7B11-4C47-9BEE-34C2B33C943E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FEA2184-E3B4-4FBC-80F2-053B7F79DEA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FEA2184-E3B4-4FBC-80F2-053B7F79DEA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FEA2184-E3B4-4FBC-80F2-053B7F79DEA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FEA2184-E3B4-4FBC-80F2-053B7F79DEA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

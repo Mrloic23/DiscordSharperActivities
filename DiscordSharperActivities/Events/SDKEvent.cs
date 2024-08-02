@@ -6,7 +6,7 @@ namespace DiscordSharperActivities.Events;
 [SupportedOSPlatform("browser")]
 internal class SDKEvent<T>
 {
-    private object _lock = new();
+    private readonly object _lock = new();
     internal EventType EventType { get; }
     EventHandler<T>? _handlers;
     internal SDKEvent(EventType eventType)

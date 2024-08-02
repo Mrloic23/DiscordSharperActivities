@@ -3,9 +3,9 @@ using DiscordSharperActivities.Models;
 
 namespace DiscordSharperActivities.Events.Args;
 
-public class LayoutModeChangedArgs
+public class LayoutModeChangedArgs(LayoutMode layoutMode)
 {
     [JsonRequired]
     [JsonPropertyName("layout_mode")]
-    public readonly LayoutMode layoutMode = default!;
+    public readonly LayoutMode layoutMode = layoutMode;
 }

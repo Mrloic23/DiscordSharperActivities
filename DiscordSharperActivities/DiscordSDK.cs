@@ -5,6 +5,7 @@ global using global::System.Threading.Tasks;
 using System.Collections;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
 using System.Text.Json;
@@ -12,7 +13,7 @@ using DiscordSharperActivities.Events;
 using DiscordSharperActivities.Events.Args;
 using DiscordSharperActivities.Models;
 
-[assembly: Debuggable(DebuggableAttribute.DebuggingModes.EnableEditAndContinue)]
+[assembly: InternalsVisibleTo("DiscordSharperActivities.Testing")]
 namespace DiscordSharperActivities;
 
 [SupportedOSPlatform("Browser")]
@@ -26,12 +27,12 @@ public class DiscordSDK
 
     private readonly SDKEvent<ThermalState> _thermalStateChanged = new(EventType.ThermalStateUpdate);
     private static DiscordSDK? _instance;
-    private readonly JSObject _sdk;
-
+    internal protected readonly JSObject _sdk;
+    public static DiscordSDK Instance { get => _instance ?? throw new InvalidOperationException("SDK has not been created yet"); }
     public string ClientID { get => _sdk.GetPropertyAsString("clientID")!; }
     public string InstanceID { get => _sdk.GetPropertyAsString("instanceID")!; }
 
-    private DiscordSDK(SDKConfig config)
+    internal protected DiscordSDK(SDKConfig config)
     {
         var conf = config.ToJSObject();
         _sdk = JSBindings.InstantiateSDK(config.clientID, conf);
@@ -45,14 +46,6 @@ public class DiscordSDK
         if (!JSBindings.IsImported)
             await JSBindings.ImportAsync(config.urlBase);
         _instance = new DiscordSDK(config);
-        return _instance;
-    }
-
-    /// <returns>The instance of the Discord SDK</returns>
-    public static DiscordSDK GetInstance()
-    {
-        if (_instance == null)
-            throw new InvalidOperationException("SDK has not been created yet");
         return _instance;
     }
 

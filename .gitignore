@@ -3,5 +3,6 @@
 **/bin/**
 **/node_modules/**
 DiscordSharperActivities/wwwroot/wrapper.js
+DiscordSharperActivities.Testing/wwwroot/wrapper.js
 **/out/**
 **/dist/**
