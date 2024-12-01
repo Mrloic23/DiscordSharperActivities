@@ -1,7 +1,8 @@
 import { DiscordSDK, DiscordSDKMock } from "@discord/embedded-app-sdk";
-import { SdkConfiguration } from "@discord/embedded-app-sdk/output/interface";
+import { IDiscordSDK, SdkConfiguration } from "../node_modules/@discord/embedded-app-sdk/output/interface";
 import { EventNames, EventPayloads, Mock } from "./types";
-import { EventSchema } from "@discord/embedded-app-sdk/output/schema/events";
+import { EventSchema } from "../node_modules/@discord/embedded-app-sdk/output/schema/events";
+import {createSDKConfig, ready, getCommands , subscribeToEvent } from "./wrapper"
 var guildID: string | null = null;
 var channelID: string | null = null;
 
@@ -12,32 +13,12 @@ function setGuildID(id: string) {
 function setChannelID(id: string) {
     channelID = id;
 }
-
-function createSDKConfig(): SdkConfiguration {
-    return { disableConsoleLogOverride: false };
-}
-
 function instantiateSDK(clientID: string, config?: SdkConfiguration | undefined) {
     return new DiscordSDKMock(clientID, guildID, channelID);
 }
 
-async function subscribeToEvent(sdk: DiscordSDKMock,
-    eventName: keyof typeof EventSchema,
-    callback: (event: Zod.infer<(typeof EventSchema)[keyof typeof EventSchema]['payload']>['data'] | undefined) => void
-): Promise<void> {
-    await sdk.subscribe(eventName, callback);
-}
-
-async function ready(sdk: DiscordSDK) {
-    await sdk.ready();
-}
-
-function getCommands(sdk: DiscordSDK) {
-    return sdk.commands;
-}
-
-function emitEvent<T extends EventNames>(sdk: DiscordSDKMock, eventName: T, eventData: EventPayloads<T>) {
-    sdk.emitEvent(eventName, eventData);
+function emitEvent<T extends EventNames>(sdk: DiscordSDKMock, eventName: T, eventData: string) {
+    sdk.emitEvent(eventName, JSON.parse(eventData));
 }
 
 function emitReady(sdk: DiscordSDKMock) {
@@ -51,8 +32,9 @@ window.DiscordWrapper = {
     emitReady,
     createSDKConfig,
     instantiateSDK,
-    //forced to inline because type definition is just breaking on this for no reason :/
-    subscribeToEvent: async(sdk, event, callback) => await sdk.subscribe(event, callback),
+    subscribeToEvent,
     ready,
     getCommands
 } satisfies Mock;
+
+export { setGuildID, setChannelID, createSDKConfig, instantiateSDK, ready, getCommands, emitEvent, emitReady };

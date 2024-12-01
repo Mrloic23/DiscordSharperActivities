@@ -25,12 +25,19 @@ public class DiscordSDK
     private readonly SDKEvent<SpeakingStopArgs> _speakingStop = new(EventType.SpeakingStop);
     private readonly SDKEvent<LayoutModeChangedArgs> _layoutModeChanged = new(EventType.OrientationUpdate);
 
+    private readonly SDKEvent<ScreenOrientationchangedArgs> _orientationChanged = new(EventType.OrientationUpdate);
+
+    private readonly SDKEvent<DiscordUser> _currentUserUpdated = new(EventType.CurrentUserUpdate);
+
+    private readonly SDKEvent<CreateEntitlementArgs> _entitlementCreated = new(EventType.EntitlementCreate);
     private readonly SDKEvent<ThermalState> _thermalStateChanged = new(EventType.ThermalStateUpdate);
-    private static DiscordSDK? _instance;
+    internal static DiscordSDK? _instance;
     internal protected readonly JSObject _sdk;
     public static DiscordSDK Instance { get => _instance ?? throw new InvalidOperationException("SDK has not been created yet"); }
-    public string ClientID { get => _sdk.GetPropertyAsString("clientID")!; }
-    public string InstanceID { get => _sdk.GetPropertyAsString("instanceID")!; }
+    public string ClientID { get => _sdk.GetPropertyAsString("clientId")!; }
+    public string InstanceID { get => _sdk.GetPropertyAsString("instanceId")!; }
+
+
 
     internal protected DiscordSDK(SDKConfig config)
     {
@@ -72,6 +79,7 @@ public class DiscordSDK
         remove { _voiceStateUpdate.Remove(value); }
     }
 
+
     public event EventHandler<SpeakingStartArgs> OnSpeakingStart
     {
         add { _speakingStart.Add(value); }
@@ -93,5 +101,16 @@ public class DiscordSDK
     {
         add { _thermalStateChanged.Add(value); }
         remove { _thermalStateChanged.Remove(value); }
+    }
+
+    public event EventHandler<CreateEntitlementArgs> OnEntitlementCreated
+    {
+        add { _entitlementCreated.Add(value); }
+        remove { _entitlementCreated.Remove(value); }
+    }
+    public event EventHandler<DiscordUser> OnCurrentUserUpdated
+    {
+        add { _currentUserUpdated.Add(value); }
+        remove { _currentUserUpdated.Remove(value); }
     }
 }

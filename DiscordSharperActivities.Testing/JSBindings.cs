@@ -13,16 +13,18 @@ internal static partial class JSBindings
     {
         if (IsImported)
             return;
-        await JSHost.ImportAsync("DiscordWrapper", $"{urlBase}/_content/DiscordSharperActivities.Testing/wrapper.js");
+        await JSHost.ImportAsync("DiscordWrapper", $"{urlBase}/_content/DiscordSharperActivities.Testing/mock.js?");
         IsImported = true;
         DiscordSharperActivities.JSBindings.IsImported = true;
     }
 
     [JSImport("globalThis.DiscordWrapper.emitReady")]
-    internal static partial void EmitReady(JSObject sdk);
+    [return: JSMarshalAs<JSType.Void>]
+    internal static partial void EmitReady([JSMarshalAs<JSType.Object>] JSObject sdk);
 
     [JSImport("globalThis.DiscordWrapper.emitEvent")]
-    internal static partial void EmitEvent(string eventName, string data);
+    [return: JSMarshalAs<JSType.Void>]
+    internal static partial void EmitEvent([JSMarshalAs<JSType.Object>] JSObject sdk, [JSMarshalAs<JSType.String>] string eventName, [JSMarshalAs<JSType.String>] string data);
 
     [JSImport("globalThis.DiscordWrapper.setGuildID")]
     internal static partial void SetGuildID(string guildID);

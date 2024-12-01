@@ -6,6 +6,7 @@ namespace DiscordSharperActivities.Events;
 [SupportedOSPlatform("browser")]
 internal class SDKEvent<T>
 {
+    private static readonly JsonSerializerOptions jsonSerializerOptions = new() { IncludeFields = true };
     private readonly object _lock = new();
     internal EventType EventType { get; }
     EventHandler<T>? _handlers;
@@ -20,11 +21,12 @@ internal class SDKEvent<T>
         {
             if (_handlers is null)
             {
-                _ = JSBindings.SubscribeToEvent(EventType.GetJSName(), (jsObject) =>
+                _ = JSBindings.SubscribeToEvent(DiscordSDK.Instance._sdk, EventType.GetJSName(), (jsObject) =>
+                {
                     _handlers!.Invoke(
-                        this,
-                        JsonSerializer.Deserialize<T>(jsObject.ToString()!)!
-                ));
+                        DiscordSDK.Instance,
+                        JsonSerializer.Deserialize<T>(JSBindings.Stringify(jsObject), jsonSerializerOptions)!);
+                });
             }
             return _handlers += handler;
         }

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import * as esbuild from 'esbuild';
+import esbuildPluginTsc from 'esbuild-plugin-tsc';
 
 await esbuild.build({
     entryPoints: [
@@ -14,5 +15,10 @@ await esbuild.build({
     format: 'iife',
     target: ['es2020'],
     sourcemap: true,
-    globalName:"wrapper"
+    globalName:"wrapper",
+    plugins: [esbuildPluginTsc({
+        tsconfig: './tsconfig.json',
+        keepNamespaces: true,
+        force: true,
+    })],
 })

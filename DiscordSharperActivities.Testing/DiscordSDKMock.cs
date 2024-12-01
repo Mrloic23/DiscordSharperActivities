@@ -10,8 +10,8 @@ public class DiscordSDKMock : DiscordSDK
 {
     private static DiscordSDKMock? _instance;
 
-    public new static DiscordSDKMock Instance{ get => _instance ?? throw new InvalidOperationException("SDK has not been created yet"); }
-    public EventEmitter Emit { get; } = new();
+    public new static DiscordSDKMock Instance { get => _instance ?? throw new InvalidOperationException("SDK has not been created yet"); }
+    public EventEmitter Emit { get => new(this); }
     private DiscordSDKMock(SDKConfig config) : base(config)
     {
     }
@@ -22,11 +22,10 @@ public class DiscordSDKMock : DiscordSDK
             throw new InvalidOperationException("SDK has already been created");
         if (!JSBindings.IsImported)
             await JSBindings.ImportAsync(config.urlBase);
+
         _instance = new(config);
+        DiscordSDK._instance = _instance;
         return _instance;
     }
-
-
-
 
 }

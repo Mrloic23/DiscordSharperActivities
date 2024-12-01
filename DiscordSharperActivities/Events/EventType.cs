@@ -26,6 +26,7 @@ internal static class EventTypeExt
         EventType.ThermalStateUpdate => "THERMAL_STATE_UPDATE",
         EventType.ActivityInstanceParticipantsUpdate => "ACTIVITY_INSTANCE_PARTICIPANTS_UPDATE",
         EventType.LayoutModeUpdate => "ACTIVITY_LAYOUT_MODE_UPDATE",
+        EventType.CurrentUserUpdate => "CURRENT_USER_UPDATE",
         _ => throw new ArgumentOutOfRangeException(nameof(@event), @event, null),
     };
 }

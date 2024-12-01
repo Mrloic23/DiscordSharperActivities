@@ -4,7 +4,7 @@
   "description": "A Discord embedded app sdk wrapper",
   "main": "wrapper.js",
   "scripts": {
-    "build": "tsc ; ./esbuild.mjs"
+    "build": "./esbuild.mjs"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.23.0",
+    "esbuild-plugin-tsc": "^0.4.0",
     "typescript": "^5.5.4"
   },
   "dependencies": {

@@ -6,3 +6,4 @@ DiscordSharperActivities/wwwroot/wrapper.js
 DiscordSharperActivities.Testing/wwwroot/wrapper.js
 **/out/**
 **/dist/**
+DiscordSharperActivities.Testing/wwwroot/mock.js

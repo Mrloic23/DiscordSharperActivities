@@ -7,11 +7,13 @@
     ],
     "compilerOptions": {
         "target": "ES2015",
-        "module": "commonjs",
+        "module": "NodeNext",
+        "lib": ["DOM", "ESNext"],
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "outDir": "./out/"
+        "outDir": "./out/",
+        "moduleResolution": "NodeNext"
     }
 }
